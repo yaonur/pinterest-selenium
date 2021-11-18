@@ -97,6 +97,28 @@ def get_pins(key_word: str, number_of_pins_to_take: int) -> List:
             return pin_links
 
 
+def merge_pin_list(pin_links, keyword):
+    print("mergin pin lists")
+    try:
+        with open(f"data/{keyword}/{keyword}_links.json") as file:
+            old_links = json.load(file)
+    except:
+        old_links=False
+        print("no old record for links")
+        pass
+    try:
+        if old_links:
+            pass
+        with open(f"data/{keyword}/{keyword}_links.json") as file:
+            json.dump(pin_links,file)
+
+    except:
+        print(f"big fail on mergin links skip {keyword}")
+        return False
+
+
+
+
 def grap_data_from_pins(pins_links: list, images_path: str, starting_index=0) -> list:
     pins_data = []
     have_owner = False
@@ -216,7 +238,7 @@ def grap_data_from_pins(pins_links: list, images_path: str, starting_index=0) ->
     return pins_data
 
 
-def save_json( file_path: str, file_name: str, data: list):
+def save_json(file_path: str, file_name: str, data: list):
     print("converting to json with file name:" + file_name)
     with open(f"{file_path}{file_name}.json", "w", encoding="utf8") as out_data:
         json.dump(data, out_data, ensure_ascii=False)

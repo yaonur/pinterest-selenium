@@ -46,7 +46,7 @@ class Driver:
     driver = None
 
     @classmethod
-    def start_driver(cls, headless=True, proxy=None):
+    def start_driver(cls, headless=False, proxy=None):
         options = Options()
         if proxy:
             http_proxy = Proxy()

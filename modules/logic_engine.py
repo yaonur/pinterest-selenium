@@ -56,6 +56,7 @@ def login(email, password, wait_time=10):
 
 
 def get_pins(key_word: str, number_of_pins_to_take: int) -> List:
+    print(f'getting pins in keyword {key_word}')
     pin_links = []
     Driver.driver.get(
         f"https://tr.pinterest.com/search/pins/?q={key_word}&rs=rs&eq=&etslf=2120&term_meta[]={key_word}%7Crecentsearch%7C1"
@@ -66,9 +67,13 @@ def get_pins(key_word: str, number_of_pins_to_take: int) -> List:
         last_height = Driver.driver.execute_script(
             "return document.body.scrollHeight"
         )
-        pins = Search.find_element_class("gridCentered").find_elements(By.TAG_NAME,
-                                                                       "a"
-                                                                       )
+        try:
+            pins = Search.find_element_class("gridCentered").find_elements(By.TAG_NAME,
+                                                                           "a"
+                                                                           )
+        except:
+            print(f'no pin found keyword {key_word}')
+            break
         for pin in pins:
             try:
                 pin_links.append(pin.get_attribute("href"))

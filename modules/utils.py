@@ -46,7 +46,7 @@ class Driver:
     driver = None
 
     @classmethod
-    def start_driver(cls, headless=False, proxy=None):
+    def start_driver(cls, headless=True, proxy=None):
         options = Options()
         if proxy:
             http_proxy = Proxy()
@@ -210,8 +210,9 @@ class Data:
 
     @classmethod
     def get_image(cls, images_path: str, index: int) -> str:
+        source_link=''
         try:
-            print("trying image with soup")
+            print("trying image ")
             try:
                 source_link = (
                     WebDriverWait(Driver.driver, 1).until(EC.presence_of_element_located(
@@ -221,12 +222,11 @@ class Data:
                 soup = BeautifulSoup(Driver.driver.page_source, "html.parser")
                 source_link = soup.find("img", class_="hCL kVc L4E MIw")["src"]
                 pass
-            image = Image.open(requests.get(source_link, stream=True).raw)
-            image.save(images_path + str(index) + ".png")
+            # image = Image.open(requests.get(source_link, stream=True).raw)
+            # image.save(images_path + str(index) + ".png")
         except Exception as e:
             print("image download failed")
-            print(e)
-            pass
+            return source_link
         return source_link
 
     @classmethod

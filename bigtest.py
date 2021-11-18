@@ -15,11 +15,11 @@ def start_driver():
 
 
 def test_keyword(key_word, number_of_pins_to_take=1):
-    file_name, main_path, images_path = le.directory_file_setup(key_word)
     pin_links = le.get_pins(key_word, number_of_pins_to_take)
     if not pin_links:
         print('no pin links gonnna skip')
         return None
+    file_name, main_path, images_path = le.directory_file_setup(key_word)
     pins_data = le.grap_data_from_pins(pin_links, images_path, starting_index=0)
     le.save_json(main_path, file_name, pins_data)
     return pins_data
@@ -28,7 +28,8 @@ def test_keyword(key_word, number_of_pins_to_take=1):
 start_driver()
 with open('keywords.json') as keywords_data:
     json_data = json.load(keywords_data)
-for keyword in json_data[3:100]:
+for keyword in json_data[0:900]:
     keyword = keyword["keyword"]
-    pins_data=test_keyword(keyword,1)
+    pins_data=test_keyword(keyword,900)
+Driver.driver.close()
 

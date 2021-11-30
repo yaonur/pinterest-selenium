@@ -37,3 +37,4 @@ for keyword in json_data:
     keyword = keyword["keyword"]
     pins_data = test_keyword(keyword, 1000)
 Driver.driver.close()
+
